@@ -1,6 +1,5 @@
 /**
- * Default controller for working with forms. Initiated by default for all forms
- * on document load.
+ * Default controller for working with forms
  */
 export default class FormController {
   /**
@@ -25,6 +24,10 @@ export default class FormController {
      * @type {Element[]} - collection of form elements
      */
     this.elements = Array.from(this.form.elements);
+
+    if (!this.elements) {
+      throw new Error("Elements required");
+    }
 
     this.reactive = false;
 
@@ -95,7 +98,12 @@ export default class FormController {
    */
   submit() {
     this.clearAllMessages();
-    const { action, method } = this.form.dataset;
+    let action; let method;
+    const isPost = this.form.attributes["ng-post"];
+    if (isPost) {
+      action = isPost.value;
+      method = "POST"
+    }
     this.elements.forEach((i) => {
       // Input handler
       if (i instanceof HTMLInputElement) {

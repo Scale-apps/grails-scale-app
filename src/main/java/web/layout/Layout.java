@@ -34,7 +34,9 @@ public class Layout {
   }
 
   public static HtmlTag layout(@NotNull DomContent content) {
-    return html(head(), body(header(), content), footer());
+    return html(head(), body()
+      .attr("ng-app", "app")
+      .with(header(), content), footer());
   }
 
   public static DomContent head() {

@@ -1,3 +1,5 @@
+import FormController from "./utils/form-controller.js";
+
 window.angular.module("app", ["ng.router"])
   .config([
     "$stateProvider", "$locationProvider",
@@ -18,3 +20,17 @@ window.angular.module("app", ["ng.router"])
       
     }
   ])
+  // Emulate HTMX here, since HTMX did copy directive usage from AngularJS
+  .directive("ngPost", () => ({
+      link(_scope, elm) {
+        
+        /**
+         * @type {HTMLFormElement} - The HTML form element being controlled.
+         */
+        const form = elm[0];
+        const controller = new FormController(form);
+        elm.on("$destroy", () => {
+          controller.destroy();
+        })
+      }
+  }));

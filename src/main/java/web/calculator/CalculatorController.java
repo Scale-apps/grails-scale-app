@@ -17,7 +17,7 @@ public class CalculatorController {
             div(attrs("#calculator"))
                 .with(
                     form()
-                        .attr("data-action", URL)
+                        .attr("ng-post", URL)
                         .attr("data-update", "#myDiv")
                         .attr("data-onchange", "true")
                         .with(
@@ -28,7 +28,7 @@ public class CalculatorController {
 
   public static Context post(Context ctx) {
     Request payload = ctx.bodyAsClass(Request.class);
-    return render(ctx, div("Result" + payload.value1.add(payload.value2)));
+    return render(ctx, div("Result: " + payload.value1.add(payload.value2)));
   }
 
   static class Request {
