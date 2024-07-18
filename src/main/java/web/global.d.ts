@@ -1,15 +1,12 @@
-import { StateService, UIRouter } from "@uirouter/core";
-import FormController from "./utils/form-controller";
+import { Module } from "@angular-wave/angular.ts/types/types";
 import { RouteConfig } from "./utils/router";
 
+// angular.ts types are still a work in progress
 declare global {
   interface Window {
-    router: UIRouter;
+    angular: Module,
     routes: RouteConfig[];
     crudRoutes: RouteConfig[];
-    stateService: StateService;
-    EventBus: EventTarget;
-    FormControllers: Array<FormController>;
   }
 }
 

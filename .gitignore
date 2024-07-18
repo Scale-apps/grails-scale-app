@@ -8,3 +8,9 @@ build
 **/playwright-report
 package-lock.json
 tsconfig.tsbuildinfo
+/.apt_generated/
+/.apt_generated_tests/
+.vscode
+.settings
+.classpath
+.project

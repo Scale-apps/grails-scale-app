@@ -3,7 +3,6 @@ package web.home;
 import static j2html.TagCreator.*;
 import static web.utils.UiRouterMapping.uiRoute;
 import static web.utils.ViewHelpers.render;
-import static web.utils.components.Partial.partial;
 
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
@@ -26,7 +25,7 @@ public class HomeController {
                 main(
                     h1("Javalin Boilerplate"),
                     div("A starter template"),
-                    partial(SUBVIEW.serverPath),
+                    div( "test").attr("ng-include", SUBVIEW.serverPath),
                     section(
                         a("Demo").withHref(DemoController.URL),
                         a("Docs").withHref(DocsController.URL))),

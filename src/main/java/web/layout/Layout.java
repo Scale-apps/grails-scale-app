@@ -13,25 +13,24 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import web.Routes;
 import web.utils.UiRouterMapping;
-import web.utils.components.UiView;
 
 public class Layout {
 
-  /**
-   * CDN libs to be loaded into the header of our main layout
-   */
+  /** CDN libs to be loaded into the header of our main layout*/
   private static final List<String> ULR_LIBS =
       Arrays.asList(
-          "https://unpkg.com/alpinejs@3.13.1/dist/cdn.min.js",
-          "https://cdn.jsdelivr.net/npm/@uirouter/core@6.1.0/_bundles/ui-router-core.min.js",
-          "https://cdn.jsdelivr.net/npm/server-page-component/dist/server-page.umd.min.js");
+          "https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js");
 
   public static Context get(Context ctx) {
     return ctx.html(layout().render());
   }
 
   public static HtmlTag layout() {
-    return html(head(), body(header(), new UiView().withId("root")), footer());
+    return html(head(), 
+    body()
+      // Bootstrap our AngularTS app
+      .attr("ng-app", "app")
+      .with(header(), div().attr("ng-view"), footer()));
   }
 
   public static HtmlTag layout(@NotNull DomContent content) {
@@ -47,13 +46,13 @@ public class Layout {
         meta().attr("name", "google").attr("content", "notranslate"),
         link().attr("rel", "stylesheet").attr("href", "/public/web/app.css"),
         each(libs(), s -> script().withSrc(s).isDefer()),
-        // Define ui-router routes
+        // Define ng-router routes
         script("window.routes = " + convertToJsonArray(Routes.spaRoutes)),
         script("window.crudRoutes = " + convertToJsonArray(Routes.crudRoutes)));
   }
 
   public static DomContent header() {
-    return j2html.TagCreator.header(nav(a(strong("SCALE APP")).withHref("/")));
+    return j2html.TagCreator.header(nav(a(strong("JAVALIN APP")).withHref("/")));
   }
 
   public static FooterTag footer() {

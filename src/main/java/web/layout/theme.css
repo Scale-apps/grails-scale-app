@@ -23,7 +23,6 @@
   --theme-950: #0b2846;
   /* End Swap this out */
 
-  /** Example Pico mods **/
   --primary: var(--theme-500) !important;
   --primary-hover: var(--theme-600) !important;
 }

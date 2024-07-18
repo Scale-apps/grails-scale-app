@@ -21,7 +21,7 @@ import web.utils.RouteMapping;
 import web.utils.UiRouterMapping;
 
 public class Routes {
-  public static final ArrayList<RouteMapping> routes = new ArrayList();
+  public static final ArrayList<RouteMapping> routes = new ArrayList<>();
   public static final ArrayList<UiRouterMapping> spaRoutes = new ArrayList<>();
   public static final ArrayList<UiRouterMapping> crudRoutes = new ArrayList<>();
   static final RouteMapping[] mappings = {

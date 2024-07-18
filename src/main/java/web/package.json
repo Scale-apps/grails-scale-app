@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "browsersync": "browser-sync start --files '../../../../build/classes/' --no-inject-changes",
+    "browsersync": "browser-sync start --files '../../java' --no-inject-changes --reload-delay 500",
     "typecheck": "./node_modules/.bin/tsc",
     "lint": "./node_modules/.bin/eslint ./ --fix",
     "format": "./node_modules/.bin/prettier ./ --write",
@@ -10,8 +10,8 @@
   "devDependencies": {
     "@playwright/test": "latest",
     "@types/node": "latest",
+    "@angular-wave/angular.ts": "latest", 
     "@typescript-eslint/eslint-plugin": "latest",
-    "@uirouter/core": "latest",
     "browser-sync": "latest",
     "eslint": "latest",
     "eslint-config-airbnb-base": "latest",
@@ -19,11 +19,9 @@
     "eslint-plugin-import": "latest",
     "playwright": "latest",
     "prettier": "latest",
-    "server-page-component": "latest",
-    "typescript": "latest",
-    "web": "^0.0.2"
+    "typescript": "latest"
   },
   "dependencies": {
-    "pollen-css": "^4.6.2"
+    "pollen-css": "5.0.1"
   }
 }

@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import web.Routes;
 import web.layout.Layout;
 
+@SuppressWarnings("unchecked")
 public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   public CrudViewHandler() {
@@ -33,6 +34,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   @Override
   public void delete(@NotNull Context ctx, @NotNull String id) {
+    @SuppressWarnings("unchecked")
     Optional<T> product = (Optional<T>) Db.findById(getModelClass(), new BigInteger(id));
     if (product.isEmpty()) {
       ctx.status(404);
@@ -68,6 +70,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   @Override
   public void getOne(@NotNull Context ctx, @NotNull String id) {
+    
     Optional<T> item = (Optional<T>) Db.findById(getModelClass(), new BigInteger(id));
     if (item.isEmpty()) {
       view(ctx, div("Not found"));
@@ -150,9 +153,9 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   public abstract Class<? extends Model> getModelClass();
 
-  public abstract ValidationHelper getCreateValidator(String body);
+  public abstract ValidationHelper<T> getCreateValidator(String body);
 
-  public ValidationHelper getUpdateValidator(String body) {
+  public ValidationHelper<T> getUpdateValidator(String body) {
     return getCreateValidator(body);
   }
 

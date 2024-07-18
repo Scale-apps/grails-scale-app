@@ -5,9 +5,9 @@ import io.javalin.security.RouteRole;
 import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 
-public class CrudViewApiBuilder extends ApiBuilder {
+public class CrudViewApiBuilder<T> extends ApiBuilder {
 
-  public static void crudViews(@NotNull CrudViewHandler crudHandler) {
+  public static void crudViews(@SuppressWarnings("rawtypes") @NotNull CrudViewHandler crudHandler) {
     CrudViewApiBuilder.crudViews(crudHandler, new RouteRole[0]);
   }
 
@@ -36,14 +36,11 @@ public class CrudViewApiBuilder extends ApiBuilder {
     }
 
     staticInstance()
-        .get(serverPath.replace(resourceId, "") + "new", ctx -> crudHandler.newForm(ctx), roles);
-    staticInstance()
-        .get(serverPath, ctx -> crudHandler.getOne(ctx, ctx.pathParam(resourceId)), roles);
-    staticInstance().get(serverPath.replace(resourceId, ""), crudHandler::getAll, roles);
-    staticInstance().post(publicPath.replace(resourceId, ""), crudHandler::create, roles);
-    staticInstance()
-        .put(publicPath, ctx -> crudHandler.update(ctx, ctx.pathParam(resourceId)), roles);
-    staticInstance()
+        .get(serverPath.replace(resourceId, "") + "new", ctx -> crudHandler.newForm(ctx), roles)
+        .get(serverPath, ctx -> crudHandler.getOne(ctx, ctx.pathParam(resourceId)), roles)
+        .get(serverPath.replace(resourceId, ""), crudHandler::getAll, roles)
+        .post(publicPath.replace(resourceId, ""), crudHandler::create, roles)
+        .put(publicPath, ctx -> crudHandler.update(ctx, ctx.pathParam(resourceId)), roles)
         .delete(publicPath, ctx -> crudHandler.delete(ctx, ctx.pathParam(resourceId)), roles);
 
     staticInstance()

@@ -27,9 +27,7 @@ compile:
 # Helper for running dev mode
 start:
 	## @make db-up
-	$(FRONTEND_CONTEXT) start &
-	$(SERVER_CONTEXT) start
-	pkill -P $$
+	$(FRONTEND_CONTEXT) start
 
 include ./config/dev.env
 DBDSN:="host=$(POSTGRES_HOST) user=$(POSTGRES_USER) password=$(POSTGRES_PASSWORD) dbname=$(POSTGRES_DB) port=$(POSTGRES_PORT) sslmode=disable"

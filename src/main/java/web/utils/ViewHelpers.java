@@ -15,7 +15,7 @@ public class ViewHelpers {
   }
 
   public static List<String> getFieldNames(Class<?> clazz) {
-    ArrayList list = new ArrayList();
+    ArrayList<String> list = new ArrayList<String>();
     for (Field i : clazz.getDeclaredFields()) {
       list.add(i.getName());
     }
