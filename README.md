@@ -1,7 +1,7 @@
 
 # JAVALIN BOILERPLATE
 
-This is a Javalin starter POC template, aiming to provide just enough modern front-end tooling to develop interactive web-applications in modern Java. Inspirations are taken from Apache Wicket, JSF and Vaadin, yet keeping in line with minimalistic approach of Javalin. [AngularTS](https://github.com/Angular-Wave/angular.ts) is used for front-end routing and form processing. 
+This is a Javalin starter POC template, aiming to provide just enough modern front-end tooling to develop interactive web-applications in modern Java. Inspirations are taken from Apache Wicket, JSF, and Vaadin, but keeping in line with minimalistic approach of Javalin. [AngularTS](https://github.com/Angular-Wave/angular.ts) is used for front-end routing and form processing. 
 
 ## Software Requirements
 
