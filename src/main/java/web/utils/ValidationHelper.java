@@ -6,7 +6,7 @@ import io.javalin.json.JavalinJackson;
 import io.javalin.validation.BodyValidator;
 import kotlin.jvm.functions.Function1;
 
-public abstract class ValidationHelper<T> extends BodyValidator {
+public abstract class ValidationHelper<T> extends BodyValidator<T> {
 
   public ValidationHelper(String body, Class<T> clazz) {
     super(body, clazz, new JavalinJackson());

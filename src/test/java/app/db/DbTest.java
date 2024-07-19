@@ -1,16 +1,20 @@
 package app.db;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import app.models.Product;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
 import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import app.models.Product;
 
 public class DbTest {
 
@@ -28,7 +32,8 @@ public class DbTest {
 
   @Test
   void testQueryValNoResult() {
-    Optional result = Db.queryVal(String.class, "SELECT title FROM products WHERE amount = 0.00");
+    Optional<?> result =
+        Db.queryVal(String.class, "SELECT title FROM products WHERE amount = 0.00");
 
     assertTrue(result.isEmpty());
   }
@@ -77,7 +82,7 @@ public class DbTest {
   @Test
   void testDelete() {
     String res = Db.create(new Product("test", "test.com", 1, BigDecimal.valueOf(100.00)));
-    Optional result = Db.queryVal(Product.class, "SELECT * FROM products WHERE id = " + res);
+    Optional<?> result = Db.queryVal(Product.class, "SELECT * FROM products WHERE id = " + res);
     assertFalse(result.isEmpty());
 
     Db.delete("products", res);

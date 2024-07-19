@@ -10,7 +10,7 @@ public class CrudViewApiBuilder<T> extends ApiBuilder {
     CrudViewApiBuilder.crudViews(crudHandler, new RouteRole[0]);
   }
 
-  public static void crudViews(CrudViewHandler crudHandler, RouteRole... roles) {
+  public static void crudViews(CrudViewHandler<?> crudHandler, RouteRole... roles) {
     String path = crudHandler.getPath() + "/{id}";
     String publicPath = prefixPath(path);
     String serverPath = "/_" + publicPath.substring(1);

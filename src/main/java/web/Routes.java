@@ -1,6 +1,7 @@
 package web;
 
-import static io.javalin.http.HandlerType.*;
+import static io.javalin.http.HandlerType.GET;
+import static io.javalin.http.HandlerType.POST;
 
 import io.javalin.Javalin;
 import io.javalin.validation.ValidationError;
@@ -34,7 +35,7 @@ public class Routes {
     new RouteMapping(POST, CalculatorController.URL, CalculatorController::post)
   };
 
-  static final CrudViewHandler[] crudHandlers = {new ProductController()};
+  static final CrudViewHandler<?>[] crudHandlers = {new ProductController()};
 
   public static Javalin init(Javalin javalin) {
     List.of(mappings)

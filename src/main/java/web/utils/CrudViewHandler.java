@@ -1,5 +1,17 @@
 package web.utils;
 
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+
+import org.eclipse.jetty.http.HttpMethod;
+import org.jetbrains.annotations.NotNull;
+
+import app.db.Db;
+import app.models.Product;
+import io.javalin.apibuilder.CrudHandler;
+import io.javalin.http.Context;
 import static j2html.TagCreator.a;
 import static j2html.TagCreator.button;
 import static j2html.TagCreator.div;
@@ -16,23 +28,12 @@ import static j2html.TagCreator.td;
 import static j2html.TagCreator.th;
 import static j2html.TagCreator.thead;
 import static j2html.TagCreator.tr;
+import j2html.tags.DomContent;
+import web.Routes;
+import web.layout.Layout;
 import static web.utils.ViewHelpers.getFieldNames;
 import static web.utils.ViewHelpers.getFieldValue;
 
-import app.db.Db;
-import app.models.Product;
-import io.javalin.apibuilder.CrudHandler;
-import io.javalin.http.Context;
-import j2html.tags.DomContent;
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Optional;
-import org.eclipse.jetty.http.HttpMethod;
-import org.jetbrains.annotations.NotNull;
-import web.Routes;
-import web.layout.Layout;
-
-@SuppressWarnings("unchecked")
 public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   public CrudViewHandler() {
@@ -50,7 +51,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   @Override
   public void delete(@NotNull Context ctx, @NotNull String id) {
-    Optional<T> product = (Optional<T>) Db.findById(getModelClass(), new BigInteger(id));
+    Optional<?> product = Db.findById(getModelClass(), new BigInteger(id));
     if (product.isEmpty()) {
       ctx.status(404);
     } else {
@@ -61,7 +62,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   @Override
   public void getAll(@NotNull Context ctx) {
-    List<T> items = (List<T>) Db.queryList(getModelClass());
+    List<? extends Model> items = Db.queryList(getModelClass());
     List<String> fields = getFieldNames(getModelClass());
 
     view(
@@ -84,9 +85,9 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
   }
 
   @Override
-  public void getOne(@NotNull Context ctx, @NotNull String id) {
+  public void getOne(Context ctx, String id) {
 
-    Optional<T> item = (Optional<T>) Db.findById(getModelClass(), new BigInteger(id));
+    Optional<? extends Model> item = Db.findById(getModelClass(), new BigInteger(id));
     if (item.isEmpty()) {
       view(ctx, div("Not found"));
     } else {
@@ -108,12 +109,12 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
   }
 
   @Override
-  public void update(@NotNull Context ctx, @NotNull String id) {
+  public void update(Context ctx, String id) {
     Db.update(id, getUpdateValidator(ctx.body()).validate());
     ctx.json("").status(204);
   }
 
-  public void newForm(@NotNull Context ctx) {
+  public void newForm(Context ctx) {
     view(
         ctx,
         main(
@@ -124,8 +125,8 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
                 StateService.created(getName()))));
   }
 
-  public void updateForm(@NotNull Context ctx, @NotNull String id) {
-    Optional<T> item = (Optional<T>) Db.findById(getModelClass(), new BigInteger(id));
+  public void updateForm(Context ctx, @NotNull String id) {
+    Optional<? extends Model> item = Db.findById(getModelClass(), new BigInteger(id));
     if (item.isEmpty()) {
       view(ctx, div("Not found"));
     } else {
@@ -141,10 +142,10 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
   }
 
   private DomContent createForm(
-      Optional<T> item, HttpMethod method, String actionUrl, String dataSuccess) {
+      Optional<? extends Model> item, HttpMethod method, String actionUrl, String dataSuccess) {
     List<String> fields = getFieldNames(getModelClass());
     return form()
-        .attr("ng-" + method.asString().toLowerCase(), actionUrl)
+        .attr("ng-" + method.asString().toLowerCase(Locale.ROOT), actionUrl)
         .attr("data-method", method.asString())
         .attr("data-success", dataSuccess)
         .with(
@@ -174,15 +175,15 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
     return getCreateValidator(body);
   }
 
-  public String getPath() {
+  public final String getPath() {
     return "/" + getName();
   }
 
-  public String getServerPath() {
+  public final String getServerPath() {
     return "/_" + getName();
   }
 
-  public String getName() {
+  public final String getName() {
     return Db.getTableName(getModelClass());
   }
 

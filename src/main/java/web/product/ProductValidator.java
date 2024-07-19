@@ -8,7 +8,6 @@ public class ProductValidator extends ValidationHelper<Product> {
     super(body, Product.class);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public Product validate() {
     return (Product)

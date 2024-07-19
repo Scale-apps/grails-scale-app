@@ -1,6 +1,5 @@
 package app.db;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -20,7 +19,10 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 import org.jetbrains.annotations.NotNull;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Db {
   private static Connection conn;
@@ -188,7 +190,7 @@ public class Db {
   }
 
   @SuppressWarnings("StringSplitter")
-  public static String getTableName(Class clazz) {
+  public static String getTableName(Class<?> clazz) {
     String[] split = clazz.getName().split("\\.");
     String tableName = split[split.length - 1] + "s";
     return tableName.toLowerCase(Locale.getDefault());
@@ -232,16 +234,18 @@ public class Db {
 
   private static void addCastedValue(PreparedStatement preparedStatement, int index, Object value)
       throws SQLException {
-    if (value instanceof String) {
-      preparedStatement.setString(index, (String) value);
-    } else if (value instanceof Integer || value instanceof BigInteger) {
-      preparedStatement.setInt(index, (Integer) value);
-    } else if (value instanceof Double) {
-      preparedStatement.setDouble(index, (Double) value);
+    if (value instanceof String string) {
+      preparedStatement.setString(index, string);
+    } else if (value instanceof Integer integer) {
+      preparedStatement.setInt(index, integer);
+    } else if (value instanceof BigInteger) {
+      preparedStatement.setObject(index, value, java.sql.Types.BIGINT);
+    } else if (value instanceof Double aDouble) {
+      preparedStatement.setDouble(index, aDouble);
     } else if (value instanceof BigDecimal bigDecimal) {
       preparedStatement.setBigDecimal(index, bigDecimal);
     } else {
-      throw new RuntimeException("Unknown field type " + value.toString());
+      throw new RuntimeException("Unknown field type " + value);
     }
   }
 
