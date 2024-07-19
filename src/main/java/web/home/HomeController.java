@@ -1,6 +1,16 @@
 package web.home;
 
-import static j2html.TagCreator.*;
+import static j2html.TagCreator.a;
+import static j2html.TagCreator.aside;
+import static j2html.TagCreator.div;
+import static j2html.TagCreator.each;
+import static j2html.TagCreator.filter;
+import static j2html.TagCreator.h1;
+import static j2html.TagCreator.h6;
+import static j2html.TagCreator.li;
+import static j2html.TagCreator.main;
+import static j2html.TagCreator.section;
+import static j2html.TagCreator.ul;
 import static web.utils.UiRouterMapping.uiRoute;
 import static web.utils.ViewHelpers.render;
 
@@ -25,7 +35,10 @@ public class HomeController {
                 main(
                     h1("Javalin Boilerplate"),
                     div("A starter template"),
-                    div("test").attr("ng-include", SUBVIEW.serverPath),
+                    div("test")
+                        .attr(
+                            "ng-include",
+                            "'" + SUBVIEW.serverPath + "'"), // ng-include wants expressions :(
                     section(
                         a("Demo").withHref(DemoController.URL),
                         a("Docs").withHref(DocsController.URL))),

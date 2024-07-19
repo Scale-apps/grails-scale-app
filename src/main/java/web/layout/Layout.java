@@ -19,7 +19,6 @@ import j2html.tags.specialized.FooterTag;
 import j2html.tags.specialized.HtmlTag;
 import java.util.Arrays;
 import java.util.List;
-import org.jetbrains.annotations.NotNull;
 import web.Routes;
 import web.utils.UiRouterMapping;
 
@@ -43,7 +42,7 @@ public class Layout {
             .with(header(), div().attr("ng-view"), footer()));
   }
 
-  public static HtmlTag layout(@NotNull DomContent content) {
+  public static HtmlTag layout(DomContent content) {
     return html(head(), body().attr("ng-app", "app").with(header(), content), footer());
   }
 

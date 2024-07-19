@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import org.eclipse.jetty.http.HttpMethod;
-import org.jetbrains.annotations.NotNull;
 import web.Routes;
 import web.layout.Layout;
 
@@ -41,7 +40,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
   }
 
   @Override
-  public void create(@NotNull Context ctx) {
+  public void create(Context ctx) {
     String res = Db.create(getCreateValidator(ctx.body()).validate());
     IdReq resBody = new IdReq();
     resBody.id = res;
@@ -49,7 +48,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
   }
 
   @Override
-  public void delete(@NotNull Context ctx, @NotNull String id) {
+  public void delete(Context ctx, String id) {
     Optional<?> product = Db.findById(getModelClass(), new BigInteger(id));
     if (product.isEmpty()) {
       ctx.status(404);
@@ -60,7 +59,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
   }
 
   @Override
-  public void getAll(@NotNull Context ctx) {
+  public void getAll(Context ctx) {
     List<? extends Model> items = Db.queryList(getModelClass());
     List<String> fields = getFieldNames(getModelClass());
 
@@ -124,7 +123,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
                 StateService.created(getName()))));
   }
 
-  public void updateForm(Context ctx, @NotNull String id) {
+  public void updateForm(Context ctx, String id) {
     Optional<? extends Model> item = Db.findById(getModelClass(), new BigInteger(id));
     if (item.isEmpty()) {
       view(ctx, div("Not found"));
@@ -162,7 +161,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
             button("Submit").withType("submit"));
   }
 
-  public void get(@NotNull Context ctx) {
+  public void get(Context ctx) {
     Layout.get(ctx);
   }
 

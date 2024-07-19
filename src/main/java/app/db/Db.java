@@ -20,7 +20,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.jetbrains.annotations.NotNull;
 
 public class Db {
   private static Connection conn;
@@ -59,7 +58,7 @@ public class Db {
    *     Optional otherwise.
    * @throws RuntimeException If a database access error occurs.
    */
-  public static <T> Optional<T> queryVal(Class<T> type, @NotNull String query, Object... args) {
+  public static <T> Optional<T> queryVal(Class<T> type, String query, Object... args) {
     try (PreparedStatement statement = conn.prepareStatement(query)) {
       setParameters(statement, args);
       try (ResultSet resultSet = statement.executeQuery()) {
@@ -275,7 +274,7 @@ public class Db {
     }
   }
 
-  public static boolean delete(@NotNull String tableName, @NotNull String id) {
+  public static boolean delete(String tableName, String id) {
     return Db.execute("DELETE FROM " + tableName + " WHERE id = ?", new BigInteger(id));
   }
 
