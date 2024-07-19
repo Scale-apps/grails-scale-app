@@ -4,9 +4,10 @@ import { RouteConfig } from "./utils/router";
 // angular.ts types are still a work in progress
 declare global {
   interface Window {
-    angular: Module,
+    angular: Module;
     routes: RouteConfig[];
     crudRoutes: RouteConfig[];
+    stateService: Object;
   }
 }
 

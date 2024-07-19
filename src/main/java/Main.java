@@ -16,7 +16,9 @@ public class Main {
                   staticFiles -> {
                     staticFiles.hostedPath =
                         "/public"; // change to host files on a subpath, like '/assets'
-                    staticFiles.directory = "./src/main/java"; // this exposes ALL files in the web folder so a different location would be in order
+                    staticFiles.directory =
+                        "./src/main/java"; // this exposes ALL files in the web folder so a
+                    // different location would be in order
                     staticFiles.location = Location.EXTERNAL;
                   });
             });

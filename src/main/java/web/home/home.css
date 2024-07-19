@@ -19,7 +19,7 @@
   }
 
   & aside {
-    background-color: var(--color-gray-200);
+    background-color: var(--color-grey-200);
     padding-top: var(--scale-2);
     padding-left: var(--scale-1);
     padding-right: var(--scale-1);

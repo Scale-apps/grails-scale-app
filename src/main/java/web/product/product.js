@@ -1,4 +1,4 @@
-import { generateRouteConfig } from "../utils/router.js";
+import generateRouteConfig from "../utils/router.js";
 
 /**
  * Returns a list of product route configurations.

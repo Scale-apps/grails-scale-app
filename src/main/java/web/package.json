@@ -10,7 +10,7 @@
   "devDependencies": {
     "@playwright/test": "latest",
     "@types/node": "latest",
-    "@angular-wave/angular.ts": "latest", 
+    "@angular-wave/angular.ts": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "browser-sync": "latest",
     "eslint": "latest",

@@ -2,7 +2,8 @@ header:first-of-type {
   display: flex;
   align-items: center;
   user-select: none;
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--color-grey-200);
+  margin-bottom: var(--scale-2);
   & nav {
     width: auto;
     /* Logo */

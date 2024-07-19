@@ -11,6 +11,6 @@ public class DocsController {
   public static final String URL = "/docs";
 
   public static Context get(Context ctx) {
-    return render(ctx, Layout.layout(div("Docs")));
+    return render(ctx, Layout.layout(div("Sample docs")));
   }
 }

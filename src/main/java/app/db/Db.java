@@ -4,8 +4,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.jetbrains.annotations.NotNull;
@@ -226,8 +238,8 @@ public class Db {
       preparedStatement.setInt(index, (Integer) value);
     } else if (value instanceof Double) {
       preparedStatement.setDouble(index, (Double) value);
-    } else if (value instanceof BigDecimal) {
-      preparedStatement.setBigDecimal(index, (BigDecimal) value);
+    } else if (value instanceof BigDecimal bigDecimal) {
+      preparedStatement.setBigDecimal(index, bigDecimal);
     } else {
       throw new RuntimeException("Unknown field type " + value.toString());
     }

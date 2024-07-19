@@ -4,12 +4,16 @@
 export default class FormController {
   /**
    * @param {HTMLFormElement} form - The HTML form element to be controlled.
+   * @param {"post"|"put"|"get"|"delete"} method
    */
-  constructor(form) {
+  constructor(form, method) {
     /**
      * @type {string} - ID of this form controller
      */
     this.id = `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
+
+    /** @type {"post"|"put"|"get"|"delete"} */
+    this.method = method;
 
     /**
      * @type {HTMLFormElement} - The HTML form element being controlled.
@@ -98,12 +102,9 @@ export default class FormController {
    */
   submit() {
     this.clearAllMessages();
-    let action; let method;
-    const isPost = this.form.attributes["ng-post"];
-    if (isPost) {
-      action = isPost.value;
-      method = "POST"
-    }
+    const action = this.form.attributes[`ng-${this.method}`].value;
+    const method = this.method.toUpperCase();
+
     this.elements.forEach((i) => {
       // Input handler
       if (i instanceof HTMLInputElement) {
@@ -114,7 +115,7 @@ export default class FormController {
         this.dataModel[i.name] = i.value;
       }
     });
-    fetch(action, this.maybeAttachBody(method || "POST")).then((res) => {
+    fetch(action, this.maybeAttachBody(method)).then((res) => {
       if (res.status < 300 && res.status >= 200) {
         this.onSuccess(res);
       } else {

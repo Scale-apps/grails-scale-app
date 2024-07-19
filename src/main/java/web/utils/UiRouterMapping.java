@@ -14,8 +14,7 @@ public class UiRouterMapping {
     this.serverPath = serverPath;
   }
 
-  public static UiRouterMapping uiRoute(
-       String name, String url, String serverPath) {
+  public static UiRouterMapping uiRoute(String name, String url, String serverPath) {
     return new UiRouterMapping(name, url, serverPath);
   }
 

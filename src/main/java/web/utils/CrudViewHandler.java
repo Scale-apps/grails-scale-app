@@ -1,7 +1,23 @@
 package web.utils;
 
-import static j2html.TagCreator.*;
-import static web.utils.ViewHelpers.*;
+import static j2html.TagCreator.a;
+import static j2html.TagCreator.button;
+import static j2html.TagCreator.div;
+import static j2html.TagCreator.each;
+import static j2html.TagCreator.filter;
+import static j2html.TagCreator.form;
+import static j2html.TagCreator.input;
+import static j2html.TagCreator.label;
+import static j2html.TagCreator.main;
+import static j2html.TagCreator.menu;
+import static j2html.TagCreator.table;
+import static j2html.TagCreator.tbody;
+import static j2html.TagCreator.td;
+import static j2html.TagCreator.th;
+import static j2html.TagCreator.thead;
+import static j2html.TagCreator.tr;
+import static web.utils.ViewHelpers.getFieldNames;
+import static web.utils.ViewHelpers.getFieldValue;
 
 import app.db.Db;
 import app.models.Product;
@@ -34,7 +50,6 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   @Override
   public void delete(@NotNull Context ctx, @NotNull String id) {
-    @SuppressWarnings("unchecked")
     Optional<T> product = (Optional<T>) Db.findById(getModelClass(), new BigInteger(id));
     if (product.isEmpty()) {
       ctx.status(404);
@@ -70,7 +85,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   @Override
   public void getOne(@NotNull Context ctx, @NotNull String id) {
-    
+
     Optional<T> item = (Optional<T>) Db.findById(getModelClass(), new BigInteger(id));
     if (item.isEmpty()) {
       view(ctx, div("Not found"));
@@ -85,7 +100,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
               menu(
                   a("Edit").attr("onclick", StateService.edit(getName(), item.get().getId())),
                   form()
-                      .attr("data-action", "/" + getName() + "/" + item.get().getId())
+                      .attr("ng-delete", "/" + getName() + "/" + item.get().getId())
                       .attr("data-method", HttpMethod.DELETE)
                       .attr("data-success", StateService.list(getName()))
                       .with(button("Delete").withClass("secondary")))));
@@ -126,10 +141,10 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
   }
 
   private DomContent createForm(
-      Optional<T> item, HttpMethod method, String dataAction, String dataSuccess) {
+      Optional<T> item, HttpMethod method, String actionUrl, String dataSuccess) {
     List<String> fields = getFieldNames(getModelClass());
     return form()
-        .attr("data-action", dataAction)
+        .attr("ng-" + method.asString().toLowerCase(), actionUrl)
         .attr("data-method", method.asString())
         .attr("data-success", dataSuccess)
         .with(

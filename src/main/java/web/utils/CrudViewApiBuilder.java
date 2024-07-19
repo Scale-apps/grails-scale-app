@@ -3,15 +3,14 @@ package web.utils;
 import io.javalin.apibuilder.ApiBuilder;
 import io.javalin.security.RouteRole;
 import java.util.Arrays;
-import org.jetbrains.annotations.NotNull;
 
 public class CrudViewApiBuilder<T> extends ApiBuilder {
 
-  public static void crudViews(@SuppressWarnings("rawtypes") @NotNull CrudViewHandler crudHandler) {
+  public static void crudViews(@SuppressWarnings("rawtypes") CrudViewHandler crudHandler) {
     CrudViewApiBuilder.crudViews(crudHandler, new RouteRole[0]);
   }
 
-  public static void crudViews(@NotNull CrudViewHandler crudHandler, @NotNull RouteRole... roles) {
+  public static void crudViews(CrudViewHandler crudHandler, RouteRole... roles) {
     String path = crudHandler.getPath() + "/{id}";
     String publicPath = prefixPath(path);
     String serverPath = "/_" + publicPath.substring(1);

@@ -10,6 +10,6 @@ public class DemoController {
   public static final String URL = "/demo";
 
   public static Context get(Context ctx) {
-    return render(ctx, Layout.layout(div("Demo controller")));
+    return render(ctx, Layout.layout(div("Sample demo")));
   }
 }

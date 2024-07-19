@@ -25,7 +25,7 @@ public class HomeController {
                 main(
                     h1("Javalin Boilerplate"),
                     div("A starter template"),
-                    div( "test").attr("ng-include", SUBVIEW.serverPath),
+                    div("test").attr("ng-include", SUBVIEW.serverPath),
                     section(
                         a("Demo").withHref(DemoController.URL),
                         a("Docs").withHref(DocsController.URL))),

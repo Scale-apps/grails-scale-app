@@ -1,6 +1,15 @@
 package web.layout;
 
-import static j2html.TagCreator.*;
+import static j2html.TagCreator.a;
+import static j2html.TagCreator.body;
+import static j2html.TagCreator.div;
+import static j2html.TagCreator.each;
+import static j2html.TagCreator.html;
+import static j2html.TagCreator.link;
+import static j2html.TagCreator.meta;
+import static j2html.TagCreator.nav;
+import static j2html.TagCreator.script;
+import static j2html.TagCreator.strong;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,27 +25,26 @@ import web.utils.UiRouterMapping;
 
 public class Layout {
 
-  /** CDN libs to be loaded into the header of our main layout*/
+  /** CDN libs to be loaded into the header of our main layout */
   private static final List<String> ULR_LIBS =
       Arrays.asList(
-          "https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js");
+          "https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts@0.0.48/dist/angular-ts.umd.min.js");
 
   public static Context get(Context ctx) {
     return ctx.html(layout().render());
   }
 
   public static HtmlTag layout() {
-    return html(head(), 
-    body()
-      // Bootstrap our AngularTS app
-      .attr("ng-app", "app")
-      .with(header(), div().attr("ng-view"), footer()));
+    return html(
+        head(),
+        body()
+            // Bootstrap our AngularTS app
+            .attr("ng-app", "app")
+            .with(header(), div().attr("ng-view"), footer()));
   }
 
   public static HtmlTag layout(@NotNull DomContent content) {
-    return html(head(), body()
-      .attr("ng-app", "app")
-      .with(header(), content), footer());
+    return html(head(), body().attr("ng-app", "app").with(header(), content), footer());
   }
 
   public static DomContent head() {
@@ -47,7 +55,7 @@ public class Layout {
             .attr("content", "width=device-width, initial-scale=1, shrink-to-fit=no"),
         meta().attr("name", "google").attr("content", "notranslate"),
         link().attr("rel", "stylesheet").attr("href", "/public/web/app.css"),
-        each(libs(), s -> script().withSrc(s).isDefer()),
+        each(ULR_LIBS, s -> script().withSrc(s).isDefer()),
         // Define ng-router routes
         script("window.routes = " + convertToJsonArray(Routes.spaRoutes)),
         script("window.crudRoutes = " + convertToJsonArray(Routes.crudRoutes)));
@@ -63,10 +71,6 @@ public class Layout {
             .withCondAsync(true)
             .withSrc("http://localhost:3000/browser-sync/browser-sync-client.js?v=2.27.10"),
         script().attr("type", "module").attr("src", "/public/web/app.js"));
-  }
-
-  public static List<String> libs() {
-    return ULR_LIBS;
   }
 
   private static String convertToJsonArray(List<UiRouterMapping> routeMappings) {
