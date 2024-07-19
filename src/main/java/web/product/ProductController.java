@@ -4,16 +4,15 @@ import app.models.Product;
 import web.utils.CrudViewHandler;
 import web.utils.ValidationHelper;
 
-@SuppressWarnings("rawtypes")
-public class ProductController extends CrudViewHandler {
+public class ProductController extends CrudViewHandler<Product> {
 
   @Override
-  public Class getModelClass() {
+  public Class<Product> getModelClass() {
     return Product.class;
   }
 
   @Override
-  public ValidationHelper getCreateValidator(String body) {
+  public ValidationHelper<Product> getCreateValidator(String body) {
     return new ProductValidator(body);
   }
 }

@@ -1,14 +1,5 @@
 package web.layout;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.javalin.http.Context;
 import static j2html.TagCreator.a;
 import static j2html.TagCreator.body;
 import static j2html.TagCreator.div;
@@ -19,9 +10,16 @@ import static j2html.TagCreator.meta;
 import static j2html.TagCreator.nav;
 import static j2html.TagCreator.script;
 import static j2html.TagCreator.strong;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.javalin.http.Context;
 import j2html.tags.DomContent;
 import j2html.tags.specialized.FooterTag;
 import j2html.tags.specialized.HtmlTag;
+import java.util.Arrays;
+import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import web.Routes;
 import web.utils.UiRouterMapping;
 

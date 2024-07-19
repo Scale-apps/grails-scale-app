@@ -48,6 +48,6 @@ and then run `Debug Java` > `src/main/java/Main.java` in VSCode or Eclipse for a
 
 ### Starter points
 
-`CalculatorController.java` - sample of reactive UI 
-`ProductController.java` - sample CRUD
+- `CalculatorController.java` - sample of reactive UI 
+- `ProductController.java` - sample CRUD
 
