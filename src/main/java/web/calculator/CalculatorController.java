@@ -1,15 +1,15 @@
 package web.calculator;
 
-import java.math.BigInteger;
-
-import io.javalin.http.Context;
 import static j2html.TagCreator.attrs;
 import static j2html.TagCreator.div;
 import static j2html.TagCreator.form;
 import static j2html.TagCreator.input;
 import static j2html.TagCreator.label;
-import web.layout.Layout;
 import static web.utils.ViewHelpers.render;
+
+import io.javalin.http.Context;
+import java.math.BigInteger;
+import web.layout.Layout;
 
 public class CalculatorController {
   public static final String URL = "/calculator";
