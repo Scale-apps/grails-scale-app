@@ -1,5 +1,6 @@
 package app.db;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -19,10 +20,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import org.jetbrains.annotations.NotNull;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Db {
   private static Connection conn;
@@ -74,10 +72,28 @@ public class Db {
     }
   }
 
+  /**
+   * Executes a SQL query to select all records from the table corresponding to the given type and
+   * returns the result as a list of objects of that type.
+   *
+   * @param <T> the type of the objects in the returned list
+   * @param type the class type of the objects in the returned list
+   * @return a list of objects of the specified type containing all records from the table
+   */
   public static <T> List<T> queryList(Class<T> type) {
     return queryList(type, "SELECT * FROM " + getTableName(type));
   }
 
+  /**
+   * Executes a SQL query with the specified parameters and returns the result as a list of objects
+   * of the given type.
+   *
+   * @param <T> the type of the objects in the returned list
+   * @param type the class type of the objects in the returned list
+   * @param query the SQL query to be executed
+   * @param args the arguments to be set in the SQL query
+   * @return a list of objects of the specified type containing the query results
+   */
   public static <T> List<T> queryList(Class<T> type, String query, Object... args) {
     List<T> result = new ArrayList<>();
     try (PreparedStatement statement = conn.prepareStatement(query)) {
@@ -93,6 +109,15 @@ public class Db {
     return result;
   }
 
+  /**
+   * Executes a SQL query with the specified parameters.
+   *
+   * @param query the SQL query to be executed
+   * @param args the arguments to be set in the SQL query
+   * @return true if the result is a ResultSet object; false if it is an update count or there are
+   *     no results
+   * @throws RuntimeException if a database access error occurs
+   */
   public static boolean execute(String query, Object... args) {
     try {
       PreparedStatement statement = conn.prepareStatement(query);
@@ -128,10 +153,25 @@ public class Db {
     }
   }
 
+  /**
+   * Retrieves the count of records in the specified table.
+   *
+   * @param conn the database connection to use
+   * @param tableName the name of the table for which to count the records
+   * @return an {@link Optional} containing the count of records, or an empty {@link Optional} if
+   *     the count could not be retrieved
+   * @throws RuntimeException if a database access error occurs
+   */
   public static Optional<Integer> getCount(Connection conn, String tableName) {
     return queryVal(Integer.class, "SELECT COUNT(*) FROM " + tableName);
   }
 
+  /**
+   * Deletes all records from the specified table.
+   *
+   * @param tableName the name of the table from which to delete all records
+   * @throws RuntimeException if a database access error occurs
+   */
   public static void deleteAll(String tableName) {
     try (PreparedStatement statement = conn.prepareStatement("DELETE FROM " + tableName)) {
       statement.executeUpdate();
@@ -140,13 +180,13 @@ public class Db {
     }
   }
 
-  private static void setParameters(PreparedStatement statement, Object... args)
-      throws SQLException {
-    for (int i = 0; i < args.length; i++) {
-      statement.setObject(i + 1, args[i]);
-    }
-  }
-
+  /**
+   * Creates a new record in the database for the given model object and returns the generated ID.
+   *
+   * @param model the model object to be inserted into the database
+   * @return the generated ID of the newly created record
+   * @throws RuntimeException if a database access error or illegal access error occurs
+   */
   public static String create(Object model) {
     try {
       String tableName = getTableName(model);
@@ -181,6 +221,13 @@ public class Db {
       }
     } catch (SQLException | IllegalAccessException e) {
       throw new RuntimeException(e);
+    }
+  }
+
+  private static void setParameters(PreparedStatement statement, Object... args)
+      throws SQLException {
+    for (int i = 0; i < args.length; i++) {
+      statement.setObject(i + 1, args[i]);
     }
   }
 

@@ -1,17 +1,5 @@
 package web.utils;
 
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-
-import org.eclipse.jetty.http.HttpMethod;
-import org.jetbrains.annotations.NotNull;
-
-import app.db.Db;
-import app.models.Product;
-import io.javalin.apibuilder.CrudHandler;
-import io.javalin.http.Context;
 import static j2html.TagCreator.a;
 import static j2html.TagCreator.button;
 import static j2html.TagCreator.div;
@@ -28,11 +16,22 @@ import static j2html.TagCreator.td;
 import static j2html.TagCreator.th;
 import static j2html.TagCreator.thead;
 import static j2html.TagCreator.tr;
-import j2html.tags.DomContent;
-import web.Routes;
-import web.layout.Layout;
 import static web.utils.ViewHelpers.getFieldNames;
 import static web.utils.ViewHelpers.getFieldValue;
+
+import app.db.Db;
+import app.models.Product;
+import io.javalin.apibuilder.CrudHandler;
+import io.javalin.http.Context;
+import j2html.tags.DomContent;
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import org.eclipse.jetty.http.HttpMethod;
+import org.jetbrains.annotations.NotNull;
+import web.Routes;
+import web.layout.Layout;
 
 public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 

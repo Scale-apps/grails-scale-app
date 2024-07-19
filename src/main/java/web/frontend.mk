@@ -17,8 +17,8 @@ lint:
 	@npm run lint
 
 check:
-	@echo $(INFO) "Typechecking Js"
-	@npm run typecheck
+	@echo $(INFO) "Typecheck disabled. AngularTS types are a WIP"
+# @npm run typecheck
 
 PLAYWRIGHT_TEST := npx playwright test
 

@@ -24,10 +24,14 @@ setup:
 compile:
 	$(SERVER_CONTEXT) compile
 
-# Helper for running dev mode
-start:
-	## @make db-up
+# Helpers for running dev mode
+dev:
+	@make db-up
 	$(FRONTEND_CONTEXT) start
+
+run:
+	@make db-up
+	$(SERVER_CONTEXT) start	
 
 include ./config/dev.env
 DBDSN:="host=$(POSTGRES_HOST) user=$(POSTGRES_USER) password=$(POSTGRES_PASSWORD) dbname=$(POSTGRES_DB) port=$(POSTGRES_PORT) sslmode=disable"
@@ -57,14 +61,6 @@ check:
 .PHONY: test
 test:
 	$(SERVER_CONTEXT) test
-
-functional-test:
-	$(FRONTEND_CONTEXT) test
-	@fuser -k 4000/tcp # todo: remove port
-	@make db-rebuild
-
-functional-test-ui:
-	$(FRONTEND_CONTEXT) test-ui
 
 quality:
 	@make lint

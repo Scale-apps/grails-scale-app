@@ -8,9 +8,9 @@
     "playwright": "./node_modules/.bin/playwright test"
   },
   "devDependencies": {
+    "@angular-wave/angular.ts": "latest",
     "@playwright/test": "latest",
     "@types/node": "latest",
-    "@angular-wave/angular.ts": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "browser-sync": "latest",
     "eslint": "latest",
@@ -22,6 +22,7 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "pollen-css": "5.0.1"
+    "pollen-css": "5.0.1",
+    "web": "^0.0.2"
   }
 }
