@@ -17,7 +17,7 @@ jobs:
       - name: Set Up Environment
         run: echo "SUBDIRECTORY=src/main/java/web" >> $GITHUB_ENV
       - name: Install dependencies
-        run: npm ci
+        run: npm i
         working-directory: ${{ env.SUBDIRECTORY }}
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
