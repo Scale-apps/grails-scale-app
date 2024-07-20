@@ -4,6 +4,7 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
 jobs:
   test:
     timeout-minutes: 60
@@ -13,15 +14,20 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Set Up Environment
+        run: echo "SUBDIRECTORY=src/main/java/web" >> $GITHUB_ENV
       - name: Install dependencies
         run: npm ci
+        working-directory: ${{ env.SUBDIRECTORY }}
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+        working-directory: ${{ env.SUBDIRECTORY }}
       - name: Run Playwright tests
         run: npx playwright test
+        working-directory: ${{ env.SUBDIRECTORY }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: playwright-report
-          path: playwright-report/
+          path: ${{ env.SUBDIRECTORY }}/playwright-report/
           retention-days: 30

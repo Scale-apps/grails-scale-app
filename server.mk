@@ -9,7 +9,7 @@ start:
 lint:
 	./gradlew :spotlessApply
 
-test:
+check:
 	./gradlew check
 
 functional-test:

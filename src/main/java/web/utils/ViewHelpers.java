@@ -1,6 +1,5 @@
 package web.utils;
 
-import app.models.Product;
 import io.javalin.http.Context;
 import j2html.tags.DomContent;
 import java.lang.reflect.Field;
@@ -15,7 +14,7 @@ public class ViewHelpers {
   }
 
   public static List<String> getFieldNames(Class<?> clazz) {
-    ArrayList<String> list = new ArrayList<String>();
+    ArrayList<String> list = new ArrayList<>();
     for (Field i : clazz.getDeclaredFields()) {
       list.add(i.getName());
     }
@@ -24,7 +23,7 @@ public class ViewHelpers {
 
   public static Object getFieldValue(Object item, String fieldName) {
     try {
-      return Product.class.getDeclaredField(fieldName).get(item);
+      return item.getClass().getDeclaredField(fieldName).get(item);
     } catch (IllegalAccessException | NoSuchFieldException e) {
       return "";
     }

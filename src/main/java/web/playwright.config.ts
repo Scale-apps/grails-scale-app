@@ -42,7 +42,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "(cd ../../../../ && make start)",
+    command: "(cd ../../../../ && make run)",
     url: "http://localhost:4000",
     reuseExistingServer: !process.env.CI,
   },
