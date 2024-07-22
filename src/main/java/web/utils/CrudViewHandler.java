@@ -20,7 +20,6 @@ import static web.utils.ViewHelpers.getFieldNames;
 import static web.utils.ViewHelpers.getFieldValue;
 
 import app.db.Db;
-import app.models.Product;
 import io.javalin.apibuilder.CrudHandler;
 import io.javalin.http.Context;
 import j2html.tags.DomContent;
@@ -49,8 +48,8 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
 
   @Override
   public void delete(Context ctx, String id) {
-    Optional<?> product = Db.findById(getModelClass(), new BigInteger(id));
-    if (product.isEmpty()) {
+    Optional<?> item = Db.findById(getModelClass(), new BigInteger(id));
+    if (item.isEmpty()) {
       ctx.status(404);
     } else {
       Db.delete(Db.getTableName(getModelClass()), id);
@@ -94,7 +93,7 @@ public abstract class CrudViewHandler<T extends Model> implements CrudHandler {
           main(
               table(
                   each(
-                      getFieldNames(Product.class),
+                      getFieldNames(getModelClass()),
                       f -> tr(th(f), td(getFieldValue(item.get(), f).toString())))),
               menu(
                   a("Edit").attr("onclick", StateService.edit(getName(), item.get().getId())),
